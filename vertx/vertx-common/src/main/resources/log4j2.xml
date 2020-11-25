@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Properties>
+        <Property name="log-pattern">
+            %highlight{%d{HH:mm:ss.SSS} [%pid] %p{length=1}:[%50c{.}:%4L] [%40t] %m%n}{TRACE=blue, DEBUG=cyan, INFO=green, WARN=magenta, ERROR=red, FATAL=red}
+        </Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${log-pattern}"/>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="de.codecentric" level="debug" additivity="false" includeLocation="true">
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <Logger name="project.regenesis" level="debug" additivity="false" includeLocation="true">
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <Logger name="io.netty" level="info" additivity="false" includeLocation="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <Logger name="io.vertx" level="info" additivity="false" includeLocation="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <Logger name="org.apache.ignite" level="fatal" additivity="false" includeLocation="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <Logger name="org.koin" level="debug" additivity="false" includeLocation="true">
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>

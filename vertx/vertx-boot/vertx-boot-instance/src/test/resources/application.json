@@ -1,0 +1,12 @@
+{
+  "applicationName": "webApplication",
+  "activeProfile": "default",
+  "profiles": [
+    {
+      "profile": "default",
+      "mainVerticleOptions": {
+        "createDatabaseAtStart": true
+      }
+    }
+  ]
+}

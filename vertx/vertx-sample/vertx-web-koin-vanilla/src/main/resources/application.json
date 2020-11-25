@@ -1,0 +1,15 @@
+{
+  "applicationName": "webApplication",
+  "activeProfile": "default",
+  "profiles": [
+    {
+      "profile": "default",
+      "defaultPort": 8080,
+      "httpServerOptions": {
+        "8080": {
+          "port": 8080
+        }
+      }
+    }
+  ]
+}

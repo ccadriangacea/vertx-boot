@@ -1,0 +1,9 @@
+{
+  "applicationName": "bootVertxApp",
+  "activeProfile": "default",
+  "profiles": [
+    {
+      "profile": "default"
+    }
+  ]
+}

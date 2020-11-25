@@ -1,0 +1,22 @@
+{
+  "applicationName": "app",
+  "activeProfile": "default",
+  "profiles": [
+    {
+      "profile": "default",
+      "jwtOptions": {
+        "algorithm": "RS256",
+        "issuer": "https://securetoken.google.com/project-vertx-boot",
+        "audience": [
+          "project-vertx-boot"
+        ]
+      },
+      "defaultPort": 8081,
+      "httpServerOptions": {
+        "8081": {
+          "port": 8081
+        }
+      }
+    }
+  ]
+}
