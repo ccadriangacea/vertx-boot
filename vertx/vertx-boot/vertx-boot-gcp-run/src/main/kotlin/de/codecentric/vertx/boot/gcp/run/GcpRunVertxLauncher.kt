@@ -1,9 +1,9 @@
 package de.codecentric.vertx.boot.gcp.run
 
+import de.codecentric.koin.core.toKoinModuleWithOrder
 import de.codecentric.vertx.boot.launcher.DefaultVertxLauncher
 import de.codecentric.vertx.boot.verticle.KoinCoroutineVerticle
 import de.codecentric.vertx.boot.verticle.logEndOfStart
-import de.codecentric.vertx.koin.core.toModuleWithOrder
 import de.codecentric.vertx.koin.gcp.core.module.GcpCoreKoinModule
 import de.codecentric.vertx.koin.gcp.core.module.GcpCoreKoinQualifiers
 import de.codecentric.vertx.koin.gcp.run.module.GcpRunKoinModules
@@ -23,7 +23,7 @@ open class GcpRunVertxLauncher(args: Array<String>) : DefaultVertxLauncher(args)
         single(GcpCoreKoinQualifiers.GCP_PROJECT_NAME.qualifier, override = true) {
             gcpProjectId
         }
-    }.toModuleWithOrder(1, moduleName = "gcpCredentialsOrderedKoinModule")
+    }.toKoinModuleWithOrder(1, moduleName = "gcpCredentialsOrderedKoinModule")
 
     override fun run() {
         orderedModules.addAll(VertxHttpServerKoinModules().koinOrderedModules)

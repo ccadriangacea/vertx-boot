@@ -1,4 +1,4 @@
-package de.codecentric.vertx.koin.gcp.pubsub
+package de.codecentric.vertx.koin.gcp.pubsub.module
 
 import com.google.api.gax.core.FixedCredentialsProvider
 import com.google.cloud.pubsub.v1.MessageReceiver
@@ -15,31 +15,31 @@ import com.google.pubsub.v1.PubsubMessage
 import com.google.pubsub.v1.PushConfig
 import com.google.pubsub.v1.Subscription
 import com.google.pubsub.v1.Topic
-import de.codecentric.vertx.koin.core.ModuleWithOrder
-import de.codecentric.vertx.koin.core.module.KoinModule
-import de.codecentric.vertx.koin.core.module.qualifier
-import de.codecentric.vertx.koin.core.toModuleWithOrder
+import de.codecentric.koin.core.KoinModule
+import de.codecentric.koin.core.KoinModuleWithOrder
+import de.codecentric.koin.core.qualifier
+import de.codecentric.koin.core.toKoinModuleWithOrder
 import de.codecentric.vertx.koin.gcp.core.extension.GcpCoreExtensions.getOrCreate
 import de.codecentric.vertx.koin.gcp.core.module.GcpCoreKoinQualifiers.GCP_CORE_FIXED_CREDENTIALS_PROVIDER
 import de.codecentric.vertx.koin.gcp.core.module.GcpCoreKoinQualifiers.GCP_PROJECT_NAME
-import de.codecentric.vertx.koin.gcp.pubsub.GcpPubSubCommonModule.getGcpPubSubMessage
-import de.codecentric.vertx.koin.gcp.pubsub.GcpPubSubCommonModule.getGcpPubSubMessageFromRoutingContext
-import de.codecentric.vertx.koin.gcp.pubsub.GcpPubSubCommonModule.getOrCreateSubscription
-import de.codecentric.vertx.koin.gcp.pubsub.GcpPubSubCommonModule.getOrCreateTopic
-import de.codecentric.vertx.koin.gcp.pubsub.GcpPubSubCommonModule.getPublisher
-import de.codecentric.vertx.koin.gcp.pubsub.GcpPubSubCommonModule.getSubscriber
-import de.codecentric.vertx.koin.gcp.pubsub.GcpPubSubKoinQualifiers.GCP_PUB_SUB_CUSTOM_SUBSCRIPTION
-import de.codecentric.vertx.koin.gcp.pubsub.GcpPubSubKoinQualifiers.GCP_PUB_SUB_MESSAGE
-import de.codecentric.vertx.koin.gcp.pubsub.GcpPubSubKoinQualifiers.GCP_PUB_SUB_MESSAGE_FROM_ROUTING_CONTEXT
-import de.codecentric.vertx.koin.gcp.pubsub.GcpPubSubKoinQualifiers.GCP_PUB_SUB_PUBLISHER
-import de.codecentric.vertx.koin.gcp.pubsub.GcpPubSubKoinQualifiers.GCP_PUB_SUB_SUBSCRIBER
-import de.codecentric.vertx.koin.gcp.pubsub.GcpPubSubKoinQualifiers.GCP_PUB_SUB_SUBSCRIPTION
-import de.codecentric.vertx.koin.gcp.pubsub.GcpPubSubKoinQualifiers.GCP_PUB_SUB_SUBSCRIPTION_ID
-import de.codecentric.vertx.koin.gcp.pubsub.GcpPubSubKoinQualifiers.GCP_PUB_SUB_SUBSCRIPTION_NAME
-import de.codecentric.vertx.koin.gcp.pubsub.GcpPubSubKoinQualifiers.GCP_PUB_SUB_TOPIC
-import de.codecentric.vertx.koin.gcp.pubsub.GcpPubSubKoinQualifiers.GCP_PUB_SUB_TOPIC_ID
-import de.codecentric.vertx.koin.gcp.pubsub.GcpPubSubKoinQualifiers.GCP_PUB_SUB_TOPIC_NAME
-import de.codecentric.vertx.koin.gcp.pubsub.GcpPubSubKoinQualifiers.GCP_PUB_SUB_TOPIC_SCOPE
+import de.codecentric.vertx.koin.gcp.pubsub.module.GcpPubSubCommonModule.getGcpPubSubMessage
+import de.codecentric.vertx.koin.gcp.pubsub.module.GcpPubSubCommonModule.getGcpPubSubMessageFromRoutingContext
+import de.codecentric.vertx.koin.gcp.pubsub.module.GcpPubSubCommonModule.getOrCreateSubscription
+import de.codecentric.vertx.koin.gcp.pubsub.module.GcpPubSubCommonModule.getOrCreateTopic
+import de.codecentric.vertx.koin.gcp.pubsub.module.GcpPubSubCommonModule.getPublisher
+import de.codecentric.vertx.koin.gcp.pubsub.module.GcpPubSubCommonModule.getSubscriber
+import de.codecentric.vertx.koin.gcp.pubsub.module.GcpPubSubKoinQualifiers.GCP_PUB_SUB_CUSTOM_SUBSCRIPTION
+import de.codecentric.vertx.koin.gcp.pubsub.module.GcpPubSubKoinQualifiers.GCP_PUB_SUB_MESSAGE
+import de.codecentric.vertx.koin.gcp.pubsub.module.GcpPubSubKoinQualifiers.GCP_PUB_SUB_MESSAGE_FROM_ROUTING_CONTEXT
+import de.codecentric.vertx.koin.gcp.pubsub.module.GcpPubSubKoinQualifiers.GCP_PUB_SUB_PUBLISHER
+import de.codecentric.vertx.koin.gcp.pubsub.module.GcpPubSubKoinQualifiers.GCP_PUB_SUB_SUBSCRIBER
+import de.codecentric.vertx.koin.gcp.pubsub.module.GcpPubSubKoinQualifiers.GCP_PUB_SUB_SUBSCRIPTION
+import de.codecentric.vertx.koin.gcp.pubsub.module.GcpPubSubKoinQualifiers.GCP_PUB_SUB_SUBSCRIPTION_ID
+import de.codecentric.vertx.koin.gcp.pubsub.module.GcpPubSubKoinQualifiers.GCP_PUB_SUB_SUBSCRIPTION_NAME
+import de.codecentric.vertx.koin.gcp.pubsub.module.GcpPubSubKoinQualifiers.GCP_PUB_SUB_TOPIC
+import de.codecentric.vertx.koin.gcp.pubsub.module.GcpPubSubKoinQualifiers.GCP_PUB_SUB_TOPIC_ID
+import de.codecentric.vertx.koin.gcp.pubsub.module.GcpPubSubKoinQualifiers.GCP_PUB_SUB_TOPIC_NAME
+import de.codecentric.vertx.koin.gcp.pubsub.module.GcpPubSubKoinQualifiers.GCP_PUB_SUB_TOPIC_SCOPE
 import io.vertx.core.json.JsonObject
 import io.vertx.ext.web.RoutingContext
 import org.koin.core.error.NoBeanDefFoundException
@@ -66,7 +66,7 @@ class GcpPubSubKoinModule : KoinModule {
             scoped(GCP_PUB_SUB_SUBSCRIPTION_NAME.qualifier) {
                 when (val subscriptionId = getOrNull<String>(GCP_PUB_SUB_SUBSCRIPTION_ID.qualifier)) {
                     null -> throw NoBeanDefFoundException("$GCP_PUB_SUB_SUBSCRIPTION_ID must be defined to get a scoped $GCP_PUB_SUB_SUBSCRIPTION_NAME")
-                    else -> ProjectSubscriptionName.format(get<String>(GCP_PROJECT_NAME.qualifier), subscriptionId)
+                    else -> ProjectSubscriptionName.format(get(GCP_PROJECT_NAME.qualifier), subscriptionId)
                 }
             }
 
@@ -114,9 +114,9 @@ class GcpPubSubKoinModule : KoinModule {
                 getGcpPubSubMessageFromRoutingContext(routingContext)
             }
         }
-    }.toModuleWithOrder(moduleName = "gcpPubSubOrderedKoinModule")
+    }.toKoinModuleWithOrder(moduleName = "gcpPubSubOrderedKoinModule")
 
-    override val koinOrderedModules: LinkedHashSet<ModuleWithOrder> = linkedSetOf(gcpPubSubOrderedKoinModule)
+    override val koinOrderedModules: LinkedHashSet<KoinModuleWithOrder> = linkedSetOf(gcpPubSubOrderedKoinModule)
 }
 
 internal object GcpPubSubCommonModule {

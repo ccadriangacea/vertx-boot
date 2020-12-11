@@ -11,10 +11,10 @@ import com.google.cloud.tasks.v2.Queue
 import com.google.cloud.tasks.v2.QueueName
 import com.google.cloud.tasks.v2.Task
 import com.google.protobuf.ByteString
-import de.codecentric.vertx.koin.core.ModuleWithOrder
-import de.codecentric.vertx.koin.core.module.KoinModule
-import de.codecentric.vertx.koin.core.module.qualifier
-import de.codecentric.vertx.koin.core.toModuleWithOrder
+import de.codecentric.koin.core.KoinModule
+import de.codecentric.koin.core.KoinModuleWithOrder
+import de.codecentric.koin.core.qualifier
+import de.codecentric.koin.core.toKoinModuleWithOrder
 import de.codecentric.vertx.koin.gcp.core.extension.GcpCoreExtensions.getOrCreate
 import de.codecentric.vertx.koin.gcp.core.module.GcpCoreKoinQualifiers.*
 import de.codecentric.vertx.koin.gcp.tasks.module.GcpPubSubCommonModule.getOrCreateQueue
@@ -57,9 +57,9 @@ class GcpTasksKoinModule : KoinModule {
                 getOrCreateTask(get(GCP_CORE_FIXED_CREDENTIALS_PROVIDER.qualifier), get(GCP_TASKS_QUEUE_NAME.qualifier), task)
             }
         }
-    }.toModuleWithOrder(moduleName = "gcpTasksOrderedKoinModule")
+    }.toKoinModuleWithOrder(moduleName = "gcpTasksOrderedKoinModule")
 
-    override val koinOrderedModules: LinkedHashSet<ModuleWithOrder> = linkedSetOf(gcpTasksOrderedKoinModule)
+    override val koinOrderedModules: LinkedHashSet<KoinModuleWithOrder> = linkedSetOf(gcpTasksOrderedKoinModule)
 }
 
 // TODO create client in scope and close it with scope, not every time the function ends

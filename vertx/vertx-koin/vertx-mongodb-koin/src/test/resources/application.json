@@ -1,0 +1,29 @@
+{
+  "applicationName": "mongotest",
+  "activeProfile": "localhost",
+  "profiles": [
+    {
+      "profile": "default",
+      "mongodbClientOptions": {
+        "db_name": "test",
+        "connection_string": "mongodb+srv://clustername.mongodb.net/?replicaSet=atlas-something-shard-0&readPreference=primary&appname=vertxtest&ssl=true",
+        "username": "username",
+        "password": "password",
+        "authSource": "something",
+        "caPath": "trustid-x3-root.pem"
+      }
+    },
+    {
+      "profile": "localhost",
+      "mongodbClientOptions": {
+        "host": "localhost",
+        "port": 27017,
+        "db_name": "test",
+        "username": "mongoadmin",
+        "password": "secret",
+        "authSource": "admin",
+        "ssl": false
+      }
+    }
+  ]
+}

@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package de.codecentric.vertx.boot.web
 
 import de.codecentric.vertx.koin.web.module.CustomPortVertxWebKoinQualifiers.VERTX_HTTPSERVER_CUSTOM_PORT

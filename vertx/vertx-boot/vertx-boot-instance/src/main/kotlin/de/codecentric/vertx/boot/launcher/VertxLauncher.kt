@@ -2,16 +2,16 @@
 
 package de.codecentric.vertx.boot.launcher
 
+import de.codecentric.koin.core.KoinModuleWithOrder
+import de.codecentric.kotlin.logger.loggerWithTab
+import de.codecentric.util.fnresult.handleThrowable
+import de.codecentric.util.fnresult.onFailureEmpty
 import de.codecentric.vertx.boot.logger.KoinLogger
-import de.codecentric.vertx.common.fn.handleThrowable
-import de.codecentric.vertx.common.fn.onFailureEmpty
 import de.codecentric.vertx.common.util.doNothing
-import de.codecentric.vertx.koin.core.ModuleWithOrder
 import de.codecentric.vertx.koin.core.command.CCBareCommandFactory
 import de.codecentric.vertx.koin.core.module.ClusterVertxKoinQualifiers.CLUSTER_VERTX_CLUSTER_MANAGER
 import de.codecentric.vertx.koin.core.module.VertxConfigKoinModule
 import de.codecentric.vertx.koin.core.module.VertxKoinModule
-import de.codecentric.vertx.logger.loggerWithTab
 import io.vertx.core.DeploymentOptions
 import io.vertx.core.Future.future
 import io.vertx.core.Vertx
@@ -40,8 +40,8 @@ interface VertxLauncher : VertxLifecycleHooks, KoinComponent {
     val args: Array<String>
     val mainVerticleClass: String?
 
-    val orderedModules: MutableSet<ModuleWithOrder>
-    val overrideModules: MutableSet<ModuleWithOrder>
+    val orderedModules: MutableSet<KoinModuleWithOrder>
+    val overrideModules: MutableSet<KoinModuleWithOrder>
 
     fun run()
     fun stop()
@@ -56,8 +56,8 @@ abstract class AbstractVertxLauncher(final override val args: Array<String>) : V
     private lateinit var vertxDelegate: Vertx
     private var clusterManager: ClusterManager? = null
 
-    final override val orderedModules: MutableSet<ModuleWithOrder> = mutableSetOf()
-    final override val overrideModules: MutableSet<ModuleWithOrder> = mutableSetOf()
+    final override val orderedModules: MutableSet<KoinModuleWithOrder> = mutableSetOf()
+    final override val overrideModules: MutableSet<KoinModuleWithOrder> = mutableSetOf()
 
     init {
         this.register(ccBareCommandFactory)
@@ -160,7 +160,7 @@ abstract class AbstractVertxLauncher(final override val args: Array<String>) : V
         logger.loggerWithTab(8, INFO) { " -> Running koin start..." }
 
         val koinStartTime = measureTimeMillis {
-            val toAddModules = mutableListOf<ModuleWithOrder>()
+            val toAddModules = mutableListOf<KoinModuleWithOrder>()
                 .apply {
                     addAll(orderedModules)
                     addAll(overrideModules)

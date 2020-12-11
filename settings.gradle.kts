@@ -17,6 +17,22 @@ pluginManagement {
     }
 }
 
+"koin".loadGradleFileStructure(
+    listOf(
+        "koin",
+        "koin:koin-core",
+        "koin:koin-test"
+    )
+)
+
+"util".loadGradleFileStructure(
+    listOf(
+        "util",
+        "util:kotlin-logger",
+        "util:fn-result"
+    )
+)
+
 "vertx".loadGradleFileStructure(
     listOf(
         "vertx",
@@ -31,16 +47,17 @@ pluginManagement {
         "vertx:vertx-gcp-koin:vertx-gcp-run-koin",
         "vertx:vertx-gcp-koin:vertx-gcp-tasks-koin",
         "vertx:vertx-koin",
-        "vertx:vertx-logger",
+        "vertx:vertx-koin:vertx-koin-core",
+        "vertx:vertx-koin:vertx-mongodb-koin",
+        "vertx:vertx-koin:vertx-web-koin",
+        "vertx:vertx-koin:vertx-webclient-koin",
+        "vertx:vertx-koin:vertx-service-discovery-koin",
         "vertx:vertx-sample:vertx-boot-http-server-vanilla",
         "vertx:vertx-sample:vertx-boot-vanilla",
         "vertx:vertx-sample:vertx-koin-vanilla",
         "vertx:vertx-sample:vertx-vanilla",
         "vertx:vertx-sample:vertx-web-koin-vanilla",
-        "vertx:vertx-service-discovery-koin",
-        "vertx:vertx-test-koin",
-        "vertx:vertx-web-koin",
-        "vertx:vertx-webclient-koin"
+        "vertx:vertx-test-koin"
     )
 )
 

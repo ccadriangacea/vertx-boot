@@ -10,17 +10,6 @@ import org.gradle.kotlin.dsl.provideDelegate
 
 val vertXVersion: String by System.getProperties()
 
-fun Project.kotlinDependencies(configurationName: String = "implementation") {
-    val kotlinVersion: String by System.getProperties()
-    val coroutinesVersion: String by System.getProperties()
-
-    dependencies {
-        configurationName(kotlin(module = "stdlib-jdk8", version = kotlinVersion))
-        configurationName("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
-        configurationName("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$coroutinesVersion")
-    }
-}
-
 fun Project.kotlinReflectDependencies(configurationName: String = "implementation") {
     val kotlinVersion: String by System.getProperties()
 
@@ -34,19 +23,6 @@ fun Project.kotlinTestingDependencies(configurationName: String = "testImplement
 
     dependencies {
         configurationName("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
-    }
-}
-
-fun Project.vertxCoreDependencies(configurationName: String = "api") {
-    dependencies {
-        configurationName("io.vertx:vertx-core:$vertXVersion")
-    }
-}
-
-fun Project.vertxKotlinDependencies(configurationName: String = "api") {
-    dependencies {
-        configurationName("io.vertx:vertx-lang-kotlin:$vertXVersion")
-        configurationName("io.vertx:vertx-lang-kotlin-coroutines:$vertXVersion")
     }
 }
 
@@ -95,6 +71,12 @@ fun Project.vertxWebClientDependencies(configurationName: String = "api") {
 fun Project.vertxPgClientDependencies(configurationName: String = "implementation") {
     dependencies {
         configurationName("io.vertx:vertx-pg-client:$vertXVersion")
+    }
+}
+
+fun Project.vertxMongodbDependencies(configurationName: String = "implementation") {
+    dependencies {
+        configurationName("io.vertx:vertx-mongo-client:$vertXVersion")
     }
 }
 

@@ -3,7 +3,7 @@ package de.codecentric.vertx.koin.test.extension
 import de.codecentric.vertx.boot.launcher.VertxLauncher
 import de.codecentric.vertx.koin.core.module.VertxKoinQualifiers.VERTX_INSTANCE
 import de.codecentric.vertx.koin.test.VertxLauncherIntegrationTest
-import de.codecentric.vertx.logger.loggerWithTab
+import de.codecentric.kotlin.logger.loggerWithTab
 import io.vertx.core.Vertx
 import mu.KotlinLogging
 import org.assertj.core.api.SoftAssertions

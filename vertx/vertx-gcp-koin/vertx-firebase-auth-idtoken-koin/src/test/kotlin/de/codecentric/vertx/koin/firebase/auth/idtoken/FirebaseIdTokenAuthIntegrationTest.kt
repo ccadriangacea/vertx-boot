@@ -59,7 +59,7 @@ class FirebaseIdTokenAuthIntegrationTest : VertxLauncherIntegrationTest() {
         @RegisterExtension
         val koinVertxExtension = KoinVertxExtension(launcher)
 
-        private const val TOKEN: String = "change_locally"
+        private const val TOKEN = "change_locally"
     }
 
     private val webClient: WebClient = getKoin().get(VERTX_WEB_CLIENT.qualifier)

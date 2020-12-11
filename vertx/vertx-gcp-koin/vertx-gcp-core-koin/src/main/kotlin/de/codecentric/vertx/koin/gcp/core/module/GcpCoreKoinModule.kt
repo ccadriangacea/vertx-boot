@@ -2,11 +2,11 @@ package de.codecentric.vertx.koin.gcp.core.module
 
 import com.google.api.gax.core.FixedCredentialsProvider
 import com.google.auth.oauth2.GoogleCredentials
-import de.codecentric.vertx.koin.core.ModuleWithOrder
+import de.codecentric.koin.core.KoinModule
+import de.codecentric.koin.core.KoinModuleWithOrder
+import de.codecentric.koin.core.qualifier
+import de.codecentric.koin.core.toKoinModuleWithOrder
 import de.codecentric.vertx.koin.core.logger.loggerWithTab
-import de.codecentric.vertx.koin.core.module.KoinModule
-import de.codecentric.vertx.koin.core.module.qualifier
-import de.codecentric.vertx.koin.core.toModuleWithOrder
 import de.codecentric.vertx.koin.gcp.core.module.GcpCoreKoinQualifiers.GCP_CORE_FIXED_CREDENTIALS_PROVIDER
 import de.codecentric.vertx.koin.gcp.core.module.GcpCoreKoinQualifiers.GCP_CORE_GOOGLE_CREDENTIALS
 import de.codecentric.vertx.koin.gcp.core.module.GcpCoreKoinQualifiers.GCP_CREDENTIALS_FILENAME
@@ -35,9 +35,9 @@ class GcpCoreKoinModule : KoinModule {
         single(GCP_CORE_FIXED_CREDENTIALS_PROVIDER.qualifier, override = true) {
             FixedCredentialsProvider.create(get<GoogleCredentials>(GCP_CORE_GOOGLE_CREDENTIALS.qualifier))
         }
-    }.toModuleWithOrder(moduleName = "googleCredentialsOrderedKoinModule")
+    }.toKoinModuleWithOrder(moduleName = "googleCredentialsOrderedKoinModule")
 
-    override val koinOrderedModules: LinkedHashSet<ModuleWithOrder> = linkedSetOf(googleCredentialsOrderedKoinModule)
+    override val koinOrderedModules: LinkedHashSet<KoinModuleWithOrder> = linkedSetOf(googleCredentialsOrderedKoinModule)
 
     private companion object {
         const val CLOUD_PLATFORM_SCOPE = "https://www.googleapis.com/auth/cloud-platform"

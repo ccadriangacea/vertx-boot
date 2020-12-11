@@ -2,16 +2,14 @@ import gradle.dependencies.loadLocalProjects
 import gradle.dependencies.publishingToS3
 
 plugins {
-    `java-library`
-
-    id("cloud.maven-publishing")
+    id("app.kotlin-library-conventions")
 }
 
 loadLocalProjects(
     configuration = "api",
     projectNames = listOf(
-        ":vertx:vertx-koin",
-        ":vertx:vertx-web-koin",
+        ":vertx:vertx-koin:vertx-koin-core",
+        ":vertx:vertx-koin:vertx-web-koin",
         ":vertx:vertx-gcp-koin:vertx-gcp-core-koin"
     )
 )

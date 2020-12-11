@@ -1,9 +1,9 @@
 package de.codecentric.vertx.boot.web.handler
 
+import de.codecentric.util.fnresult.handleThrowable
 import de.codecentric.vertx.boot.verticle.KoinCoroutineVerticle
 import de.codecentric.vertx.boot.verticle.logEndOfStart
 import de.codecentric.vertx.boot.web.HttpServerVertxLauncher
-import de.codecentric.vertx.common.fn.handleThrowable
 import de.codecentric.vertx.koin.test.VertxLauncherIntegrationTest
 import de.codecentric.vertx.koin.test.extension.KoinVertxExtension
 import de.codecentric.vertx.koin.test.extension.softly
@@ -29,7 +29,7 @@ import io.vertx.junit5.Checkpoint
 import io.vertx.junit5.VertxTestContext
 import io.vertx.kotlin.core.json.json
 import io.vertx.kotlin.core.json.obj
-import io.vertx.kotlin.ext.web.client.sendAwait
+import io.vertx.kotlin.coroutines.await
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -115,6 +115,7 @@ internal class SingleRouteHandlerIntegrationTest : VertxLauncherIntegrationTest(
                 orderedModules.addAll(VertxWebclientKoinModule().koinOrderedModules)
             }
 
+        @Suppress("unused")
         @JvmField
         @RegisterExtension
         val koinVertxExtension = KoinVertxExtension(launcher)
@@ -130,9 +131,9 @@ internal class SingleRouteHandlerIntegrationTest : VertxLauncherIntegrationTest(
     @Test
     fun `should reply to ping call`(dependenciesTestContext: VertxTestContext) {
         webClient.get(8081, "localhost", "/ping").send()
-            .map { Assertions.assertThat(it.bodyAsString() == "pong").isTrue }
+            .map { assertThat(it.bodyAsString() == "pong").isTrue }
             .mapEmpty<Void>()
-            .onComplete(dependenciesTestContext.completing())
+            .onComplete(dependenciesTestContext.succeedingThenComplete())
     }
 
     @Test
@@ -144,7 +145,7 @@ internal class SingleRouteHandlerIntegrationTest : VertxLauncherIntegrationTest(
                     assertThat(httpResponse.bodyAsString()).isEqualTo(echoStringResponse)
                 }
             }
-            .onComplete(webCallTestContext.completing())
+            .onComplete(webCallTestContext.succeedingThenComplete())
     }
 
     @Test
@@ -156,7 +157,7 @@ internal class SingleRouteHandlerIntegrationTest : VertxLauncherIntegrationTest(
                     assertThat(httpResponse.bodyAsJsonObject()).isEqualTo(echoJsonObjectResponse)
                 }
             }
-            .onComplete(webCallTestContext.completing())
+            .onComplete(webCallTestContext.succeedingThenComplete())
     }
 
     @Test
@@ -197,29 +198,30 @@ internal class SingleRouteHandlerIntegrationTest : VertxLauncherIntegrationTest(
     fun `should receive 404 from asyncErr endpoint`(webCallTestContext: VertxTestContext) {
         webClient.get(8081, "localhost", "/asyncErr").send()
             .map { assertThat(it.statusCode()).isEqualTo(404) }
-            .onComplete(webCallTestContext.completing())
+            .onComplete(webCallTestContext.succeedingThenComplete())
     }
 
     @Test
     fun `should receive 500 from asyncEx endpoint`(webCallTestContext: VertxTestContext) {
         webClient.get(8081, "localhost", "/asyncEx").send()
             .map { assertThat(it.statusCode()).isEqualTo(500) }
-            .onComplete(webCallTestContext.completing())
+            .onComplete(webCallTestContext.succeedingThenComplete())
     }
 
     @Test
     fun `should receive 500 from asyncHandleEx endpoint`(webCallTestContext: VertxTestContext) {
         webClient.get(8081, "localhost", "/asyncHandleEx").send()
             .map { assertThat(it.statusCode()).isEqualTo(500) }
-            .onComplete(webCallTestContext.completing())
+            .onComplete(webCallTestContext.succeedingThenComplete())
     }
 
     private suspend fun makeCallOnCoroutine(checkpoint: Checkpoint, replyCountDownLatch: CountDownLatch) {
-        val httpResponse = webClient.get(8081, "localhost", "/async").sendAwait()
+        val httpResponse = webClient.get(8081, "localhost", "/async").send().await()
 
         printReply(httpResponse, checkpoint, replyCountDownLatch)
     }
 
+    @Suppress("unused")
     private fun makeCallOnEventLoop(checkpoint: Checkpoint, replyCountDownLatch: CountDownLatch) {
         logger.info { "Calling..." }
         webClient.get(8081, "localhost", "/async").send().also { logger.info { "Called" } }

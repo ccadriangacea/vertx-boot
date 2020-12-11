@@ -1,9 +1,9 @@
 package de.codecentric.vertx.koin.firebase.auth.idtoken.provider
 
-import de.codecentric.vertx.common.fn.handleThrowable
-import de.codecentric.vertx.common.fn.map
-import de.codecentric.vertx.common.fn.onFailureEmpty
-import de.codecentric.vertx.koin.core.verticle.KoinComponentWithOptIn
+import de.codecentric.koin.core.KoinComponentWithOptIn
+import de.codecentric.util.fnresult.handleThrowable
+import de.codecentric.util.fnresult.map
+import de.codecentric.util.fnresult.onFailureEmpty
 import de.codecentric.vertx.koin.web.exception.ForbiddenException
 import io.vertx.core.AsyncResult
 import io.vertx.core.Future
@@ -31,7 +31,6 @@ class FirebaseIdTokenAuthenticationProvider(private val jwtAuthOptions: JWTAuthO
             this.addJWK(jwk)
         }
     }
-
 
     override fun authenticate(credentials: JsonObject, resultHandler: Handler<AsyncResult<User>>) {
         logger.debug("authenticate json: $credentials")

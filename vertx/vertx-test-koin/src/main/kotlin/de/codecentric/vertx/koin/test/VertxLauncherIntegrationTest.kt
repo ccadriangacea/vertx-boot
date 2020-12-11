@@ -1,8 +1,8 @@
 package de.codecentric.vertx.koin.test
 
+import de.codecentric.koin.core.KoinComponentWithOptIn
 import de.codecentric.vertx.common.future.mapWithTimeout
 import de.codecentric.vertx.koin.core.logger.loggerWithTab
-import de.codecentric.vertx.koin.core.verticle.KoinComponentWithOptIn
 import io.vertx.core.CompositeFuture
 import io.vertx.core.Vertx
 import io.vertx.core.VertxException

@@ -6,15 +6,13 @@ import gradle.dependencies.publishingToS3
 import gradle.dependencies.vertxWebDependencies
 
 plugins {
-    `java-library`
-
-    id("cloud.maven-publishing")
+    id("app.kotlin-library-conventions")
 }
 
 gcpBomDependencies("api")
 gcpTasksDependencies("api")
 
-loadLocalProjects(configuration = "api", projectNames = listOf(":vertx:vertx-koin", ":vertx:vertx-gcp-koin:vertx-gcp-core-koin"))
+loadLocalProjects(configuration = "api", projectNames = listOf(":vertx:vertx-koin:vertx-koin-core", ":vertx:vertx-gcp-koin:vertx-gcp-core-koin"))
 
 // PUBLISH TO MAVEN REPO
 publishing {

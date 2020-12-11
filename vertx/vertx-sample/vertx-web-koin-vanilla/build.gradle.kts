@@ -1,6 +1,10 @@
 import gradle.dependencies.loadLocalProjects
 
-loadLocalProjects("implementation", listOf(":vertx:vertx-web-koin"))
+plugins {
+    id("app.kotlin-application-conventions")
+}
+
+loadLocalProjects("implementation", listOf(":vertx:vertx-koin:vertx-web-koin"))
 
 application {
     mainClass.set("vertx.web.koin.app.VanillaVertxWebKoinAppLauncher")

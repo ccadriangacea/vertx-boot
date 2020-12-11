@@ -2,9 +2,9 @@
 
 package vertx.koin.app
 
+import de.codecentric.koin.core.KoinComponentWithOptIn
 import de.codecentric.vertx.koin.core.module.VertxKoinModule
 import de.codecentric.vertx.koin.core.module.VertxKoinQualifiers.VERTX_INSTANCE
-import de.codecentric.vertx.koin.core.verticle.KoinComponentWithOptIn
 import io.vertx.core.AbstractVerticle
 import io.vertx.core.Promise
 import io.vertx.core.Vertx

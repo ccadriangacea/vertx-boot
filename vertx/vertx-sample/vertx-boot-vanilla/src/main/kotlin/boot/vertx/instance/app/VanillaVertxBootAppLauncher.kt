@@ -3,7 +3,7 @@
 package boot.vertx.instance.app
 
 import de.codecentric.vertx.boot.VertxBootLauncher
-import de.codecentric.vertx.logger.loggerWithTab
+import de.codecentric.kotlin.logger.loggerWithTab
 import io.vertx.core.AbstractVerticle
 import io.vertx.core.Promise
 import mu.KotlinLogging

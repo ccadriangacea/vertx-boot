@@ -4,9 +4,7 @@ import gradle.dependencies.vertxAuthDependencies
 import gradle.dependencies.vertxJwtDependencies
 
 plugins {
-    `java-library`
-
-    id("cloud.maven-publishing")
+    id("app.kotlin-library-conventions")
 }
 
 vertxAuthDependencies("api")
@@ -15,9 +13,9 @@ vertxJwtDependencies("api")
 loadLocalProjects(
     configuration = "api",
     projectNames = listOf(
-        ":vertx:vertx-koin",
-        ":vertx:vertx-web-koin",
-        ":vertx:vertx-webclient-koin"
+        ":vertx:vertx-koin:vertx-koin-core",
+        ":vertx:vertx-koin:vertx-web-koin",
+        ":vertx:vertx-koin:vertx-webclient-koin"
     )
 )
 

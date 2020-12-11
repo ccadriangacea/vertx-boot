@@ -6,9 +6,7 @@ import gradle.dependencies.vertxJwtDependencies
 import gradle.dependencies.vertxWebDependencies
 
 plugins {
-    `java-library`
-
-    id("cloud.maven-publishing")
+    id("app.kotlin-library-conventions")
 }
 
 gcpFirebaseAdminDependencies()
@@ -20,8 +18,8 @@ vertxJwtDependencies("api")
 loadLocalProjects(
     configuration = "api",
     projectNames = listOf(
-        ":vertx:vertx-koin",
-        ":vertx:vertx-webclient-koin"
+        ":vertx:vertx-koin:vertx-koin-core",
+        ":vertx:vertx-koin:vertx-webclient-koin"
     )
 )
 

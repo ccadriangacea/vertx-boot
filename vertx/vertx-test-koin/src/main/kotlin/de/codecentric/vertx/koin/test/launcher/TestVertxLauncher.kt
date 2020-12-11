@@ -1,10 +1,11 @@
+@file:Suppress("unused")
+
 package de.codecentric.vertx.koin.test.launcher
 
+import de.codecentric.koin.core.KoinModuleWithOrder
 import de.codecentric.vertx.boot.launcher.AbstractVertxLauncher
 import de.codecentric.vertx.boot.verticle.KoinCoroutineVerticle
 import de.codecentric.vertx.boot.verticle.logEndOfStart
-import de.codecentric.vertx.koin.core.ModuleWithOrder
-import io.vertx.kotlin.core.shareddata.getCounterAwait
 import io.vertx.kotlin.coroutines.await
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
@@ -12,7 +13,7 @@ import java.util.LinkedHashSet
 
 open class TestVertxLauncher(
     override val mainVerticleClass: String = "de.codecentric.vertx.koin.test.launcher.TestExceptionMainVerticle",
-    private val extraOrderedModules: LinkedHashSet<ModuleWithOrder> = linkedSetOf()
+    private val extraOrderedModules: LinkedHashSet<KoinModuleWithOrder> = linkedSetOf()
 ) : AbstractVertxLauncher(emptyArray()) {
     override fun run() {
         overrideModules.addAll(extraOrderedModules)
@@ -27,7 +28,7 @@ class TestVerticle : KoinCoroutineVerticle() {
     override suspend fun start() {
         super.start()
 
-        vertx.sharedData().getCounterAwait(DEFAULT_TEST_COUNTER_NAME).incrementAndGet()
+        vertx.sharedData().getCounter(DEFAULT_TEST_COUNTER_NAME).await().incrementAndGet()
 
         logEndOfStart()
     }

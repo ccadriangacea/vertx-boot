@@ -2,10 +2,10 @@
 
 package vertx.web.koin.app
 
+import de.codecentric.koin.core.KoinComponentWithOptIn
 import de.codecentric.vertx.koin.core.module.VertxConfigKoinModule
 import de.codecentric.vertx.koin.core.module.VertxKoinModule
 import de.codecentric.vertx.koin.core.module.VertxKoinQualifiers
-import de.codecentric.vertx.koin.core.verticle.KoinComponentWithOptIn
 import de.codecentric.vertx.koin.web.module.VertxHttpServerKoinModules
 import de.codecentric.vertx.koin.web.module.VertxHttpServerKoinQualifiers.VERTX_HTTPSERVER_DEFAULT_PORT
 import de.codecentric.vertx.koin.web.module.VertxWebHandlersKoinModules

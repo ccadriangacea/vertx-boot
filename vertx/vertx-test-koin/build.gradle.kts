@@ -5,9 +5,7 @@ import gradle.dependencies.loadLocalProjects
 import gradle.dependencies.publishingToS3
 
 plugins {
-    `java-library`
-
-    id("cloud.maven-publishing")
+    id("app.kotlin-library-conventions")
 }
 
 loadLocalProjects(configuration = "api", projectNames = listOf(":vertx:vertx-boot:vertx-boot-instance"))

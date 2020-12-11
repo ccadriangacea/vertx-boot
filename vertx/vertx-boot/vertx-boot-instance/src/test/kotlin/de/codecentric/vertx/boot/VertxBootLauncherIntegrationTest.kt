@@ -1,8 +1,10 @@
+@file:Suppress("unused")
+
 package de.codecentric.vertx.boot
 
+import de.codecentric.util.fnresult.map
 import de.codecentric.vertx.boot.verticle.KoinCoroutineVerticle
 import de.codecentric.vertx.boot.verticle.logEndOfStart
-import de.codecentric.vertx.common.fn.map
 import de.codecentric.vertx.koin.core.module.ConfigStoreType
 import de.codecentric.vertx.koin.core.module.ConfigStoreType.ENV_VAR
 import de.codecentric.vertx.koin.core.module.ConfigStoreType.FILE
@@ -17,16 +19,12 @@ import de.codecentric.vertx.koin.test.VertxLauncherIntegrationTest
 import de.codecentric.vertx.koin.test.extension.KoinVertxExtension
 import de.codecentric.vertx.koin.test.extension.softly
 import io.vertx.config.ConfigRetriever
-import mu.KLogger
-import mu.KotlinLogging
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import org.junit.jupiter.api.extension.RegisterExtension
 import org.koin.core.component.get
 import org.koin.core.component.inject
-
-private val logger: KLogger = KotlinLogging.logger {}
 
 internal class BootVertxMainVerticle : KoinCoroutineVerticle() {
     private val configStoreTypeList: List<ConfigStoreType> by inject(VERTX_CONFIG_STORE_TYPE_LIST.qualifier)
@@ -55,7 +53,6 @@ internal class VertxBootLauncherIntegrationTest : VertxLauncherIntegrationTest()
 
         @JvmField
         @RegisterExtension
-        @Suppress("unused")
         val koinVertxExtension = KoinVertxExtension(launcher)
     }
 

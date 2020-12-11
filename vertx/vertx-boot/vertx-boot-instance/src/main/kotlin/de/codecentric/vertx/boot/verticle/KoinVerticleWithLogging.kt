@@ -2,7 +2,7 @@ package de.codecentric.vertx.boot.verticle
 
 import de.codecentric.vertx.koin.core.verticle.AbstractKoinCoroutineVerticle
 import de.codecentric.vertx.koin.core.verticle.AbstractKoinVerticle
-import de.codecentric.vertx.logger.loggerWithTab
+import de.codecentric.kotlin.logger.loggerWithTab
 import mu.KLogger
 import mu.KotlinLogging
 

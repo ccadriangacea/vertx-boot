@@ -1,14 +1,14 @@
 package de.codecentric.vertx.koin.firebase.auth.idtoken.module
 
-import de.codecentric.vertx.common.fn.getResult
-import de.codecentric.vertx.common.fn.onFailure
-import de.codecentric.vertx.common.fn.peek
-import de.codecentric.vertx.koin.core.ModuleWithOrder
-import de.codecentric.vertx.koin.core.module.KoinModule
+import de.codecentric.koin.core.KoinModule
+import de.codecentric.koin.core.KoinModuleWithOrder
+import de.codecentric.koin.core.qualifier
+import de.codecentric.koin.core.toKoinModuleWithOrder
+import de.codecentric.util.fnresult.getResult
+import de.codecentric.util.fnresult.onFailure
+import de.codecentric.util.fnresult.peek
 import de.codecentric.vertx.koin.core.module.VertxConfigCommonModule.getActiveProfileProperty
 import de.codecentric.vertx.koin.core.module.VertxConfigKoinQualifiers.VERTX_CONFIG_RETRIEVER
-import de.codecentric.vertx.koin.core.module.qualifier
-import de.codecentric.vertx.koin.core.toModuleWithOrder
 import de.codecentric.vertx.koin.firebase.auth.idtoken.module.FirebaseIdTokenKoinQualifiers.FIREBASE_ID_TOKEN_AUTH_PROPERTIES
 import de.codecentric.vertx.koin.firebase.auth.idtoken.module.FirebaseIdTokenKoinQualifiers.FIREBASE_ID_TOKEN_JWT_AUTH_HANDLER
 import de.codecentric.vertx.koin.firebase.auth.idtoken.module.FirebaseIdTokenKoinQualifiers.FIREBASE_ID_TOKEN_JWT_AUTH_PROVIDER
@@ -93,9 +93,9 @@ class FirebaseIdTokenAuthKoinModule : KoinModule {
             }
         }
     }
-        .toModuleWithOrder(moduleName = "firebaseIdTokenAuthOrderedKoinModule")
+        .toKoinModuleWithOrder(moduleName = "firebaseIdTokenAuthOrderedKoinModule")
 
-    override val koinOrderedModules: LinkedHashSet<ModuleWithOrder> =
+    override val koinOrderedModules: LinkedHashSet<KoinModuleWithOrder> =
         linkedSetOf(firebaseIdTokenAuthOrderedKoinModule)
             .apply { addAll(VertxWebclientKoinModule().koinOrderedModules) }
 
