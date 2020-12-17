@@ -1,11 +1,11 @@
 import gradle.dependencies.loadLocalProjects
-import gradle.dependencies.publishingToS3
+import gradle.util.publishingToS3
 import gradle.dependencies.vertxJwtDependencies
 import gradle.dependencies.vertxOauth2Dependencies
 import gradle.dependencies.vertxWebDependencies
 
 plugins {
-    id("app.kotlin-library-conventions")
+    id("common.kotlin-library")
 }
 
 vertxWebDependencies("api")

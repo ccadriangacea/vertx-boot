@@ -2,10 +2,10 @@ import gradle.dependencies.junitDependencies
 import gradle.dependencies.koinTestDependencies
 import gradle.dependencies.kotlinReflectDependencies
 import gradle.dependencies.loadLocalProjects
-import gradle.dependencies.publishingToS3
+import gradle.util.publishingToS3
 
 plugins {
-    id("app.kotlin-library-conventions")
+    id("common.kotlin-library")
 }
 
 loadLocalProjects("api", listOf(":koin:koin-core"))

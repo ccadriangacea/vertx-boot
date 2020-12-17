@@ -1,7 +1,7 @@
 import gradle.dependencies.loadLocalProjects
 
 plugins {
-    id("app.kotlin-application-conventions")
+    id("common.kotlin-application")
 }
 
 loadLocalProjects("implementation", listOf(":vertx:vertx-boot:vertx-boot-http-server"))
