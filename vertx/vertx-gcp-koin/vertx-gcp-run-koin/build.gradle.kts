@@ -1,4 +1,4 @@
-import gradle.dependencies.loadLocalProjects
+import gradle.util.loadLocalProjects
 import gradle.util.publishingToS3
 
 plugins {

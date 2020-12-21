@@ -1,7 +1,5 @@
-import gradle.dependencies.junitDependencies
-import gradle.dependencies.koinVertxTestDependencies
-import gradle.dependencies.kotlinTestingDependencies
-import gradle.dependencies.loadLocalProjects
+import gradle.dependencies.Versions
+import gradle.util.loadLocalProjects
 import gradle.util.publishingToS3
 
 plugins {
@@ -10,9 +8,9 @@ plugins {
 
 loadLocalProjects(configuration = "api", projectNames = listOf(":vertx:vertx-boot:vertx-boot-instance"))
 
-koinVertxTestDependencies("api")
-kotlinTestingDependencies("api")
-junitDependencies("api")
+dependencies {
+    "api"(Versions.Koin.testDependencies)
+}
 
 publishing {
     publishingToS3(this@publishing)

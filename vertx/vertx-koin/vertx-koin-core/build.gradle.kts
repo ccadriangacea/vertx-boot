@@ -1,7 +1,6 @@
-import gradle.dependencies.jsonDependencies
-import gradle.dependencies.loadLocalProjects
+import gradle.dependencies.Versions
+import gradle.util.loadLocalProjects
 import gradle.util.publishingToS3
-import gradle.dependencies.vertxConfigDependencies
 
 plugins {
     id("common.kotlin-library")
@@ -12,8 +11,9 @@ loadLocalProjects(
     projectNames = listOf(":koin:koin-core", ":util:fn-result", ":vertx:vertx-common")
 )
 
-vertxConfigDependencies("api")
-jsonDependencies("api")
+dependencies {
+    Versions.Vertx.configDependencies.forEach { "api"(it) }
+}
 
 publishing {
     publishingToS3(this@publishing)

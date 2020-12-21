@@ -1,4 +1,4 @@
-import gradle.dependencies.loadLocalProjects
+import gradle.util.loadLocalProjects
 
 plugins {
     id("common.kotlin-application")

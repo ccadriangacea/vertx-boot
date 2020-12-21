@@ -1,18 +1,19 @@
-import gradle.dependencies.loadLocalProjects
+import gradle.dependencies.Versions
+import gradle.util.loadLocalProjects
 import gradle.util.publishingToS3
-import gradle.dependencies.vertxJwtDependencies
-import gradle.dependencies.vertxOauth2Dependencies
-import gradle.dependencies.vertxWebDependencies
 
 plugins {
     id("common.kotlin-library")
 }
 
-vertxWebDependencies("api")
-vertxJwtDependencies("api")
-vertxOauth2Dependencies("api")
-
 loadLocalProjects(configuration = "api", projectNames = listOf(":vertx:vertx-koin:vertx-koin-core"))
+
+dependencies {
+    Versions.Vertx.jwtDepdendencies.forEach { "api"(it) }
+    Versions.Vertx.oauth2Dependencies.forEach { "api"(it) }
+
+    "api"(Versions.Vertx.webDependencies)
+}
 
 loadLocalProjects(configuration = "testImplementation", projectNames = listOf(":vertx:vertx-test-koin"))
 

@@ -1,19 +1,11 @@
-import gradle.dependencies.gcpFirebaseAdminDependencies
-import gradle.dependencies.loadLocalProjects
+import gradle.dependencies.GcpVersions
+import gradle.dependencies.Versions
+import gradle.util.loadLocalProjects
 import gradle.util.publishingToS3
-import gradle.dependencies.vertxAuthDependencies
-import gradle.dependencies.vertxJwtDependencies
-import gradle.dependencies.vertxWebDependencies
 
 plugins {
     id("common.kotlin-library")
 }
-
-gcpFirebaseAdminDependencies()
-
-vertxWebDependencies("api")
-vertxAuthDependencies("api")
-vertxJwtDependencies("api")
 
 loadLocalProjects(
     configuration = "api",
@@ -23,10 +15,15 @@ loadLocalProjects(
     )
 )
 
+dependencies {
+    Versions.Vertx.jwtDepdendencies.forEach { "api"(it) }
+    "api"(Versions.Vertx.webDependencies)
+
+    "api"(GcpVersions.Firebase.Admin.depdendencies)
+}
+
 // TESTING
 
-
-// PUBLISH TO MAVEN REPO
 publishing {
     publishingToS3(this@publishing)
 }

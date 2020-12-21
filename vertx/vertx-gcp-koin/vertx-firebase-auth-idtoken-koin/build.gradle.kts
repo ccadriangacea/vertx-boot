@@ -1,14 +1,10 @@
-import gradle.dependencies.loadLocalProjects
+import gradle.dependencies.Versions
+import gradle.util.loadLocalProjects
 import gradle.util.publishingToS3
-import gradle.dependencies.vertxAuthDependencies
-import gradle.dependencies.vertxJwtDependencies
 
 plugins {
     id("common.kotlin-library")
 }
-
-vertxAuthDependencies("api")
-vertxJwtDependencies("api")
 
 loadLocalProjects(
     configuration = "api",
@@ -19,8 +15,12 @@ loadLocalProjects(
     )
 )
 
+dependencies {
+    Versions.Vertx.jwtDepdendencies.forEach { "api"(it) }
+}
+
 // TESTING
-loadLocalProjects(configuration = "testImplementation", projectNames = listOf(":vertx:vertx-test-koin",":vertx:vertx-boot:vertx-boot-http-server"))
+loadLocalProjects(configuration = "testImplementation", projectNames = listOf(":vertx:vertx-test-koin", ":vertx:vertx-boot:vertx-boot-http-server"))
 
 // PUBLISH TO MAVEN REPO
 publishing {

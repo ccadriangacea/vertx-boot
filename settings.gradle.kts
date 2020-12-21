@@ -2,8 +2,11 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
+logger.lifecycle("\n>>> Running settings.gradle.kts in vertx-boot\n")
+
 rootProject.name = "vertx-boot"
 
+// If other values are needed use your own gradle.properties in home directory
 private val pathSeparator: String by System.getProperties()
 private val gradlePathSeparator: String by System.getProperties()
 

@@ -1,4 +1,3 @@
-import gradle.dependencies.kotlinLoggingDependencies
 import gradle.util.publishingToS3
 
 plugins {
