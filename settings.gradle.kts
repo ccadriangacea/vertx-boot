@@ -61,7 +61,7 @@ pluginManagement {
 )
 
 // include subdirectories as projects
-fun String.loadGradleFileStructure(toLoadSubprojects: List<String>, maxDepth: Int = 2) {
+fun String.loadGradleFileStructure(toLoadSubprojects: List<String>, maxDepth: Int = 2, removeSubmodulePath: String = "") {
     val rootProjectPath = rootDir.absolutePath.toString()
     logger.lifecycle("  > Loading subprojects: $toLoadSubprojects in rootProject: $rootProjectPath")
 
@@ -72,15 +72,15 @@ fun String.loadGradleFileStructure(toLoadSubprojects: List<String>, maxDepth: In
             val subprojectPathProject = subprojectPath.toAbsolutePath().toString()
                 .removePrefix(rootProjectPath)
                 .replace(File.separator, ":")
-            val projectName = subprojectPathProject.removePrefix(":")
+            val projectName = subprojectPathProject.removePrefix(":$removeSubmodulePath")
             if (toLoadSubprojects.contains(projectName)) {
                 include(projectName)
-                findProject(subprojectPathProject)?.let { project ->
+                findProject(":$projectName")?.let { project ->
                     project.name = projectName.substringAfterLast(":")
                     project.projectDir = subprojectPath.toFile()
 
-                    logger.info("    < Subproject name: $projectName")
-                    logger.info("                 path: $subprojectPath")
+                    logger.info("    < Subproject name: ${project.name}")
+                    logger.info("                 path: ${project.projectDir}")
                 }
             }
         }
