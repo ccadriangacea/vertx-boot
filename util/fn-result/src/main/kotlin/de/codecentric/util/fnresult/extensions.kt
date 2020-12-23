@@ -3,7 +3,7 @@ package de.codecentric.util.fnresult
 import de.codecentric.util.fnresult.exception.FnResultFutureException
 
 fun <T> FnResult<T>.getResult(): T {
-    require(this is FnResult.FnSuccess<T>)
+    require(this is FnResult.FnSuccess<T>) { "The expected result was not a FnSuccess: ${(this as FnResult.FnError).errorMessage}" }
 
     return this.result
 }
@@ -42,7 +42,6 @@ fun <T> FnResult<T>.onFailureEmpty(errorFn: (FnResult.FnError<T>) -> Unit): Unit
         is FnResult.FnAsyncSuccessCancelled -> doNothing()
         is FnResult.FnError -> errorFn(this)
     }
-
 
 fun <T> FnResult.FnError<T>.throwable() = FnResultFutureException(this.errorMessage)
 

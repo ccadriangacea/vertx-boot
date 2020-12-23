@@ -5,7 +5,7 @@ import de.codecentric.vertx.boot.launcher.DefaultVertxLauncher
 import de.codecentric.vertx.boot.verticle.KoinCoroutineVerticle
 import de.codecentric.vertx.boot.verticle.logEndOfStart
 import de.codecentric.vertx.koin.gcp.core.module.GcpCoreKoinModule
-import de.codecentric.vertx.koin.gcp.core.module.GcpCoreKoinQualifiers
+import de.codecentric.vertx.koin.gcp.core.module.GcpCoreKoinQualifiers.GCP_PROJECT_NAME
 import de.codecentric.vertx.koin.gcp.run.module.GcpRunKoinModules
 import de.codecentric.vertx.koin.web.handler.setAsRouteHandler
 import de.codecentric.vertx.koin.web.module.PingSingleRouteHandler
@@ -20,7 +20,7 @@ open class GcpRunVertxLauncher(args: Array<String>) : DefaultVertxLauncher(args)
     protected lateinit var gcpProjectId: String
 
     private val gcpCredentialsOrderedKoinModule = module {
-        single(GcpCoreKoinQualifiers.GCP_PROJECT_NAME.qualifier, override = true) {
+        single(GCP_PROJECT_NAME.qualifier, override = true) {
             gcpProjectId
         }
     }.toKoinModuleWithOrder(1, moduleName = "gcpCredentialsOrderedKoinModule")
