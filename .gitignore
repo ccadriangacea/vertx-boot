@@ -379,3 +379,5 @@ fabric.properties
 /**/.idea
 *.creds
 *.jks
+
+settings.gradle.kts
