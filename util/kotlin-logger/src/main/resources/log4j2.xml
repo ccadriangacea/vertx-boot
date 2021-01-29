@@ -2,7 +2,7 @@
 <Configuration>
     <Properties>
         <Property name="log-pattern">
-            %highlight{%d{HH:mm:ss.SSS} [%pid] %p{length=1}:[%50c{.}:%4L] [%40t] %m%n}{TRACE=blue, DEBUG=cyan, INFO=green, WARN=magenta, ERROR=red, FATAL=red}
+            %highlight{%d{HH:mm:ss.SSS} [%pid] %p{length=1}:[%40c{.}:%4L] [%50t] %m%n}{TRACE=blue, DEBUG=cyan, INFO=green, WARN=magenta, ERROR=red, FATAL=red}
         </Property>
     </Properties>
 

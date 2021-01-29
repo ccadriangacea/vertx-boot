@@ -1,4 +1,5 @@
-import gradle.dependencies.Versions
+import gradle.dependencies.CoreVersions.Koin
+import gradle.dependencies.import
 import gradle.util.publishingToS3
 
 plugins {
@@ -6,7 +7,7 @@ plugins {
 }
 
 dependencies {
-    "api"(Versions.Koin.coreDependencies)
+    Koin.coreDependencies.import("api", this)
 }
 
 publishing {

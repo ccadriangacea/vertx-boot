@@ -7,7 +7,7 @@ sealed class FnResult<T> {
     data class FnAsyncSuccessCancelled<T>(val result: T) : FnResult<T>()
 
     data class FnError<T>(val errorMessage: String, val cause: Throwable? = null, val statusCode: Int = DEFAULT_HTTP_STATUS_CODE) : FnResult<T>() {
-        constructor(cause: Throwable) : this(cause.localizedMessage, cause)
+        constructor(cause: Throwable?) : this(cause?.localizedMessage ?: "Unknown cause", cause)
 
         constructor(errorMessage: String, statusCode: Int = DEFAULT_HTTP_STATUS_CODE) : this(errorMessage, null, statusCode)
     }

@@ -1,4 +1,6 @@
-import gradle.dependencies.Versions
+import gradle.dependencies.CoreVersions.Koin
+import gradle.dependencies.CoreVersions.Kotlin
+import gradle.dependencies.import
 import gradle.util.loadLocalProjects
 import gradle.util.publishingToS3
 
@@ -9,8 +11,8 @@ plugins {
 loadLocalProjects("api", listOf(":koin:koin-core"))
 
 dependencies {
-    "api"(Versions.Kotlin.reflect)
-    "api"(Versions.Koin.testDependencies)
+    Kotlin.reflect.import("api", this)
+    Koin.testDependencies.import("api", this)
 }
 
 publishing {

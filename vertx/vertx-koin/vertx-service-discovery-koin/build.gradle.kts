@@ -1,4 +1,5 @@
-import gradle.dependencies.Versions
+import gradle.dependencies.CoreVersions.Vertx
+import gradle.dependencies.import
 import gradle.util.loadLocalProjects
 import gradle.util.publishingToS3
 
@@ -9,7 +10,7 @@ plugins {
 loadLocalProjects(configuration = "api", projectNames = listOf(":vertx:vertx-koin:vertx-koin-core"))
 
 dependencies {
-    "api"(Versions.Vertx.serviceDiscoveryDependencies)
+    Vertx.serviceDiscoveryDependencies.import("api", this)
 }
 
 publishing {

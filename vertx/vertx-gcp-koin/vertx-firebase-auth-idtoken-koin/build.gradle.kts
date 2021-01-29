@@ -1,4 +1,4 @@
-import gradle.dependencies.Versions
+import gradle.dependencies.CoreVersions
 import gradle.util.loadLocalProjects
 import gradle.util.publishingToS3
 
@@ -16,7 +16,7 @@ loadLocalProjects(
 )
 
 dependencies {
-    Versions.Vertx.jwtDepdendencies.forEach { "api"(it) }
+    CoreVersions.Vertx.jwtDependencies.forEach { "api"(it) }
 }
 
 // TESTING

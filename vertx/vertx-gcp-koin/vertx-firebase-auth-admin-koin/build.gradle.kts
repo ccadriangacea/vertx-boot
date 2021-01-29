@@ -1,5 +1,6 @@
-import gradle.dependencies.GcpVersions
-import gradle.dependencies.Versions
+import gradle.dependencies.CoreVersions.Vertx
+import gradle.dependencies.GcpVersions.Firebase
+import gradle.dependencies.import
 import gradle.util.loadLocalProjects
 import gradle.util.publishingToS3
 
@@ -16,10 +17,10 @@ loadLocalProjects(
 )
 
 dependencies {
-    Versions.Vertx.jwtDepdendencies.forEach { "api"(it) }
-    "api"(Versions.Vertx.webDependencies)
+    Vertx.jwtDependencies.import("api", this)
+    Vertx.webDependencies.import("api", this)
 
-    "api"(GcpVersions.Firebase.Admin.depdendencies)
+    Firebase.Admin.coreDependencies.import("api", this)
 }
 
 // TESTING

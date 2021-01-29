@@ -1,6 +1,7 @@
+import gradle.dependencies.CoreVersions.Vertx
+import gradle.dependencies.import
 import gradle.util.loadLocalProjects
 import gradle.util.publishingToS3
-import gradle.dependencies.Versions
 
 plugins {
     id("common.kotlin-library")
@@ -12,7 +13,7 @@ loadLocalProjects(
 )
 
 dependencies {
-    "api"(Versions.Vertx.webClientDependencies)
+    Vertx.webClientDependencies.import("api", this)
 }
 
 loadLocalProjects(configuration = "testImplementation", projectNames = listOf(":vertx:vertx-test-koin"))

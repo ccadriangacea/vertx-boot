@@ -1,5 +1,7 @@
+import gradle.dependencies.CoreVersions.Vertx
 import gradle.dependencies.GcpVersions
-import gradle.dependencies.Versions
+import gradle.dependencies.GcpVersions.Tasks
+import gradle.dependencies.import
 import gradle.util.loadLocalProjects
 import gradle.util.publishingToS3
 
@@ -11,8 +13,8 @@ loadLocalProjects(configuration = "api", projectNames = listOf(":vertx:vertx-koi
 
 dependencies {
     "api"(platform(GcpVersions.bomDependencies))
-    "api"(platform(GcpVersions.PubSub.dependencies))
-    "api"(Versions.Vertx.webDependencies)
+    Tasks.coreDependencies.import("api", this)
+    Vertx.webDependencies.import("api", this)
 }
 
 // PUBLISH TO MAVEN REPO

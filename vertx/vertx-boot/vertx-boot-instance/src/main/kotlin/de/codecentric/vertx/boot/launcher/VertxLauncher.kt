@@ -3,11 +3,14 @@
 package de.codecentric.vertx.boot.launcher
 
 import de.codecentric.koin.core.KoinModuleWithOrder
+import de.codecentric.kotlin.logger.defaultLogTabDelta
+import de.codecentric.kotlin.logger.errorWithTab
 import de.codecentric.kotlin.logger.loggerWithTab
 import de.codecentric.util.fnresult.handleThrowable
 import de.codecentric.util.fnresult.onFailureEmpty
 import de.codecentric.vertx.boot.logger.KoinLogger
 import de.codecentric.vertx.common.util.doNothing
+import de.codecentric.vertx.common.util.killProcess
 import de.codecentric.vertx.koin.core.command.CCBareCommandFactory
 import de.codecentric.vertx.koin.core.module.ClusterVertxKoinQualifiers.CLUSTER_VERTX_CLUSTER_MANAGER
 import de.codecentric.vertx.koin.core.module.VertxConfigKoinModule
@@ -110,7 +113,7 @@ abstract class AbstractVertxLauncher(final override val args: Array<String>) : V
     }
 
     private fun handleFailureInVertx(vertx: Vertx?, cause: Throwable?) {
-        logger.error("Closing because: $cause")
+        logger.errorWithTab { " ! Closing vert.x because: $cause" }
 
         if (vertx?.isClustered == true) {
             val clusterManager: ClusterManager = get(CLUSTER_VERTX_CLUSTER_MANAGER.qualifier)
@@ -121,7 +124,7 @@ abstract class AbstractVertxLauncher(final override val args: Array<String>) : V
 
         vertx?.close()
 
-        // killProcess()
+        killProcess()
     }
 
     override fun run() {
@@ -138,7 +141,7 @@ abstract class AbstractVertxLauncher(final override val args: Array<String>) : V
     }
 
     private fun runInternal() {
-        logger.loggerWithTab(10, INFO) { " -> Starting to run..." }
+        logger.loggerWithTab(defaultLogTabDelta, INFO) { " -> Starting to run..." }
 
         if (hasClusterArg(runArgs)) {
             if (runArgs.isEmpty()) runArgs.add(VERTX_CLI_CLUSTER_DEFAULT_COMMAND)
@@ -146,7 +149,7 @@ abstract class AbstractVertxLauncher(final override val args: Array<String>) : V
             if (runArgs.isEmpty()) runArgs.add(VERTX_CLI_INSTANCE_DEFAULT_COMMAND)
         }
 
-        logger.loggerWithTab(10, FINE) { " -> Dispatching instance launcher with runArgs: $runArgs..." }
+        logger.loggerWithTab(defaultLogTabDelta, FINE) { " -> Dispatching instance launcher with runArgs: $runArgs..." }
         dispatch(runArgs.toTypedArray())
 
         logger.trace { "Checking for the vertx instance..." }
@@ -157,7 +160,7 @@ abstract class AbstractVertxLauncher(final override val args: Array<String>) : V
             logger.info { "Found clusterManager: ${clusterManager!!.nodeInfo} -> ${clusterManager!!.isActive}" }
         }
 
-        logger.loggerWithTab(8, INFO) { " -> Running koin start..." }
+        logger.loggerWithTab(defaultLogTabDelta - 1, INFO) { " -> Running koin start..." }
 
         val koinStartTime = measureTimeMillis {
             val toAddModules = mutableListOf<KoinModuleWithOrder>()
@@ -169,9 +172,9 @@ abstract class AbstractVertxLauncher(final override val args: Array<String>) : V
                 }
                 .sortedBy { it.order }
                 .reversed()
-            logger.loggerWithTab(6, FINEST) { " -> orderedModules found: ${orderedModules.size}..." }
-            logger.loggerWithTab(6, FINEST) { " -> overrideModules found: ${overrideModules.size}..." }
-            logger.loggerWithTab(6, FINEST) { "\nFound definitions and order: ${toAddModules.map { it.toString() }}" }
+            logger.loggerWithTab(defaultLogTabDelta - 2, FINEST) { " -> orderedModules found: ${orderedModules.size}..." }
+            logger.loggerWithTab(defaultLogTabDelta - 2, FINEST) { " -> overrideModules found: ${overrideModules.size}..." }
+            logger.loggerWithTab(defaultLogTabDelta - 2, FINEST) { "\nFound definitions and order: ${toAddModules.map { it.toString() }}" }
 
             startKoin {
                 logger(KoinLogger(logger))
@@ -179,19 +182,19 @@ abstract class AbstractVertxLauncher(final override val args: Array<String>) : V
                 modules(toAddModules.map { it.module }.toList())
             }
         }
-        logger.loggerWithTab(8) { " <- Koin app done in: $koinStartTime ms" }
+        logger.loggerWithTab(defaultLogTabDelta - 1) { " <- Koin app done in: $koinStartTime ms" }
 
-        logger.loggerWithTab(8, INFO) { " -> Deploying main verticle: $mainVerticleClass..." }
+        logger.loggerWithTab(defaultLogTabDelta - 1, INFO) { " -> Deploying main verticle: $mainVerticleClass..." }
         val time2 = measureTimeMillis {
             mainVerticleClass?.let {
                 val deploymentId = runBlocking { vertxDelegate.deployVerticle(it).await() }
-                logger.loggerWithTab(8, INFO) { " <- MainVerticle $it deployed with id: $deploymentId!" }
+                logger.loggerWithTab(defaultLogTabDelta - 1, INFO) { " <- MainVerticle $it deployed with id: $deploymentId!" }
             }
         }
-        logger.loggerWithTab(8, FINEST) { " <- Done deploying main verticle in: $time2 ms" }
+        logger.loggerWithTab(defaultLogTabDelta - 1, FINEST) { " <- Done deploying main verticle in: $time2 ms" }
 
         if (hasClusterArg(runArgs)) logger.loggerWithTab(10, INFO) { " <- Run of type cluster done..." }
-        else logger.loggerWithTab(10, INFO) { " <- Run of type instance done..." }
+        else logger.loggerWithTab(defaultLogTabDelta, INFO) { " <- Run of type instance done..." }
     }
 
     private fun checkVertxInstance() {
@@ -199,7 +202,7 @@ abstract class AbstractVertxLauncher(final override val args: Array<String>) : V
             throw VertxDelegationException("Cannot use run function without initializing Vert.X object!")
         } else {
             val vertxType = if (vertxDelegate.isClustered) "cluster" else "instance"
-            logger.loggerWithTab(8, FINEST) { " <- Vert.x[$vertxType]  created: ${vertxDelegate.hashCode()}" }
+            logger.loggerWithTab(defaultLogTabDelta - 1, FINEST) { " <- Vert.x[$vertxType]  created: ${vertxDelegate.hashCode()}" }
         }
     }
 

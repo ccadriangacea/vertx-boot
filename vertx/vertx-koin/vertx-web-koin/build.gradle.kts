@@ -1,4 +1,5 @@
-import gradle.dependencies.Versions
+import gradle.dependencies.CoreVersions.Vertx
+import gradle.dependencies.import
 import gradle.util.loadLocalProjects
 import gradle.util.publishingToS3
 
@@ -9,10 +10,9 @@ plugins {
 loadLocalProjects(configuration = "api", projectNames = listOf(":vertx:vertx-koin:vertx-koin-core"))
 
 dependencies {
-    Versions.Vertx.jwtDepdendencies.forEach { "api"(it) }
-    Versions.Vertx.oauth2Dependencies.forEach { "api"(it) }
-
-    "api"(Versions.Vertx.webDependencies)
+    Vertx.jwtDependencies.import("api", this)
+    Vertx.oauth2Dependencies.import("api", this)
+    Vertx.webDependencies.import("api", this)
 }
 
 loadLocalProjects(configuration = "testImplementation", projectNames = listOf(":vertx:vertx-test-koin"))
