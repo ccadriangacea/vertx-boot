@@ -9,9 +9,9 @@ import de.codecentric.koin.core.toKoinModuleWithOrder
 import de.codecentric.vertx.koin.core.module.VertxKoinQualifiers.VERTX_INSTANCE
 import io.vertx.core.Vertx
 import io.vertx.core.json.jackson.DatabindCodec
+import java.io.File
 import org.koin.core.qualifier.StringQualifier
 import org.koin.dsl.module
-import java.io.File
 
 class VertxKoinModule(vertx: Vertx? = null) : KoinModule {
     private val vertxKoinOrderedModule = module {
@@ -27,11 +27,12 @@ class VertxKoinModule(vertx: Vertx? = null) : KoinModule {
     private fun setupVertxProperties() {
         System.setProperty("vertx.cwd", File(".").absolutePath.replace(".", ""))
 
-        DatabindCodec.mapper().apply {
-            registerKotlinModule()
+        DatabindCodec.mapper()
+            .apply {
+                registerKotlinModule()
 
-            configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-        }
+                configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+            }
     }
 }
 
