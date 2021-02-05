@@ -3,7 +3,6 @@ package de.codecentric.vertx.boot.verticle
 import de.codecentric.kotlin.logger.loggerWithTab
 import de.codecentric.kotlin.logger.verticalLogTabDelta
 import de.codecentric.vertx.koin.core.verticle.AbstractKoinCoroutineVerticle
-import de.codecentric.vertx.koin.core.verticle.AbstractKoinVerticle
 import mu.KLogger
 import mu.KotlinLogging
 
